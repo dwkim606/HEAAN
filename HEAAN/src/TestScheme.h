@@ -23,6 +23,8 @@ public:
 	
 	static void testAdd(long logq, long logp, long logn);
 	
+	static void testSub(long logq, long logp, long logn);
+	
 	static void testMult(long logq, long logp, long logn);
 	
 	static void testiMult(long logq, long logp, long logn);
