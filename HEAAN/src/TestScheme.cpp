@@ -112,6 +112,40 @@ void TestScheme::testAdd(long logq, long logp, long logn) {
 	cout << "!!! END TEST ADD !!!" << endl;
 }
 
+void TestScheme::testSub(long logq, long logp, long logn) {
+	cout << "!!! START TEST SUB !!!" << endl;
+
+	srand(time(NULL));
+	SetNumThreads(8);
+	TimeUtils timeutils;
+	Ring ring;
+	SecretKey secretKey(ring);
+	Scheme scheme(secretKey, ring);
+
+	long n = (1 << logn);
+	complex<double>* mvec1 = EvaluatorUtils::randomComplexArray(n);
+	complex<double>* mvec2 = EvaluatorUtils::randomComplexArray(n);
+	complex<double>* msub = new complex<double>[n];
+
+	for (long i = 0; i < n; i++) {
+		msub[i] = mvec1[i] - mvec2[i];
+	}
+
+	Ciphertext cipher1, cipher2;
+	scheme.encrypt(cipher1, mvec1, n, logp, logq);
+	scheme.encrypt(cipher2, mvec2, n, logp, logq);
+
+	timeutils.start("Subtraction");
+	scheme.subAndEqual(cipher1, cipher2);
+	timeutils.stop("Subtraction");
+
+	complex<double>* dsub = scheme.decrypt(secretKey, cipher1);
+
+	StringUtils::compare(msub, dsub, n, "sub");
+
+	cout << "!!! END TEST SUB !!!" << endl;
+}
+
 void TestScheme::testMult(long logq, long logp, long logn) {
 	cout << "!!! START TEST MULT !!!" << endl;
 
