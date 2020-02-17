@@ -26,6 +26,7 @@ int main(int argc, char **argv) {
 	if(string(argv[1]) == "Encrypt") TestScheme::testEncrypt(logq, logp, logn);
 	if(string(argv[1]) == "EncryptSingle") TestScheme::testEncryptSingle(logq, logp);
 	if(string(argv[1]) == "Add") TestScheme::testAdd(logq, logp, logn);
+	if(string(argv[1]) == "Sub") TestScheme::testSub(logq, logp, logn);
 	if(string(argv[1]) == "Mult") TestScheme::testMult(logq, logp, logn);
 	if(string(argv[1]) == "iMult") TestScheme::testiMult(logq, logp, logn);
 
